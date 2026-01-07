@@ -24,12 +24,24 @@ async function getGameData() {
     }, 1000));
 }
 
+interface GameData {
+    balance: number;
+    level: number;
+    username: string;
+    lounge: {
+        name: string;
+        hookahCount: number;
+        seats: number;
+        reputation: number;
+    }
+}
+
 export default async function Dashboard() {
-    let userData = null;
+    let userData: GameData | null = null;
     let errorMsg = null;
 
     try {
-        userData = await getGameData();
+        userData = await getGameData() as GameData;
     } catch (e: any) {
         console.error("Dashboard Error:", e);
         errorMsg = e.message;
