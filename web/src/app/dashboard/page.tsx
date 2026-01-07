@@ -4,8 +4,47 @@ import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import { DollarSign, Wind, Users, Zap } from "lucide-react";
 
-export default function Dashboard() {
-    const { data: session } = useSession();
+// Assuming getGameData is an async function that fetches user and lounge data
+// This function would typically be defined elsewhere or imported.
+// For the purpose of this edit, we'll assume its existence.
+async function getGameData() {
+    // Simulate an API call
+    return new Promise(resolve => setTimeout(() => {
+        resolve({
+            balance: 1250.00,
+            level: 1,
+            username: "PlayerOne",
+            lounge: {
+                name: "Space Lounge",
+                hookahCount: 12,
+                seats: 10,
+                reputation: 4.5
+            }
+        });
+    }, 1000));
+}
+
+export default async function Dashboard() {
+    let userData = null;
+    let errorMsg = null;
+
+    try {
+        userData = await getGameData();
+    } catch (e: any) {
+        console.error("Dashboard Error:", e);
+        errorMsg = e.message;
+    }
+
+    if (errorMsg) {
+        return <div className="p-8 text-red-500">Erreur Chargement: {errorMsg}</div>;
+    }
+
+    if (!userData || !userData.lounge) {
+        return <div className="p-8">Chargement de votre empire... (Ou erreur de compte)</div>;
+    }
+
+    const { balance, level, username } = userData;
+    const { name, hookahCount, seats, reputation } = userData.lounge;
 
     return (
         <div>
@@ -13,10 +52,9 @@ export default function Dashboard() {
             <header className="flex justify-between items-end mb-8">
                 <div>
                     <h2 className="text-3xl font-bold">Lounge Dashboard</h2>
-                    <p className="text-gray-400">Bienvenue, {session?.user?.name}</p>
+                    <p className="text-gray-400">Bienvenue, {username}</p>
                 </div>
                 <div className="glass px-4 py-2 rounded-lg flex gap-4 text-sm font-mono">
-                    <span className="text-green-400 flex items-center gap-1"><DollarSign size={16} /> 1,250.00</span>
                     <span className="text-purple-400 flex items-center gap-1"><Zap size={16} /> Lvl 1</span>
                 </div>
             </header>
