@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id // Discord ID
+  username  String
+  avatarUrl String?
+  balance   Float    @default(0)
+  gems      Int      @default(0) // Premium currency
+  startedAt DateTime @default(now())
+  
+  // Tycoon stats
+  level     Int      @default(1)
+  xp        Int      @default(0)
+  
+  // Production
+  shishasServed Int @default(0)
+  
+  lounge    Lounge?
+}
+
+model Lounge {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  
+  name        String   @default("My Shisha Lounge")
+  reputation  Float    @default(0)
+  
+  // Inventory / Upgrades
+  hookahCount Int      @default(1)
+  flavorLevel Int      @default(1) // Multiplier for earnings
+  decorLevel  Int      @default(1) // Multiplier for speed/reputation
+  seats       Int      @default(5)
+  
+  employees   Employee[]
+  
+  lastCollection DateTime @default(now())
+}
+
+model Employee {
+  id        String @id @default(cuid())
+  loungeId  String
+  lounge    Lounge @relation(fields: [loungeId], references: [id])
+  
+  name      String
+  role      String // "Server", "HookahMaster"
+  speed     Int    @default(1)
+}

@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: hsl(270 50% 5%);
+  /* #0a0510 */
+  --foreground: hsl(210 40% 98%);
+
+  --card: hsl(270 50% 8%);
+  --card-foreground: hsl(210 40% 98%);
+
+  --popover: hsl(270 50% 8%);
+  --popover-foreground: hsl(210 40% 98%);
+
+  --primary: hsl(270 80% 60%);
+  /* #9333ea */
+  --primary-foreground: hsl(210 40% 98%);
+
+  --secondary: hsl(45 100% 50%);
+  /* #fbbf24 */
+  --secondary-foreground: hsl(270 50% 5%);
+
+  --muted: hsl(270 30% 15%);
+  --muted-foreground: hsl(215 20% 65%);
+
+  --accent: hsl(270 50% 15%);
+  --accent-foreground: hsl(210 40% 98%);
+
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(210 40% 98%);
+
+  --border: hsl(270 30% 15%);
+  --input: hsl(270 30% 15%);
+  --ring: hsl(270 80% 60%);
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-family: Arial, Helvetica, sans-serif;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(251, 191, 36, 0.1) 0%, transparent 30%);
+}
+
+.glass {
+  @apply bg-black/40 backdrop-blur-md border border-white/10;
+}
+
+.glass-card {
+  @apply bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-6 transition-all duration-300 hover:border-primary/50;
+}

@@ -1,0 +1,8 @@
+{
+    "name": "chicha-tycoon-monorepo",
+    "version": "1.0.0",
+    "scripts": {
+        "dev:web": "cd web && npm run dev",
+        "dev:bot": "cd bot && npm start"
+    }
+}
